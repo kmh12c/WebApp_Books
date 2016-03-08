@@ -1,0 +1,49 @@
+.myContainer {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.main {
+    padding-bottom: 15%;
+}
+
+.container {
+    border-radius: 20px;
+}
+
+.text {
+    opacity: 1;
+    color: white;
+}
+
+.nav {
+    font-size: 125%;
+}
+
+.cd-user-modal {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+ 
+.cd-user-modal.is-visible {
+  visibility: visible;
+  opacity: 1;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+.storyManager{
+  padding-left:5%;
+  padding-right:5%;
+}
+
+.storyTable{
+  margin-bottom:100px;
+}
+
+.cd-form input.content {
+  height: 25%;
+}
