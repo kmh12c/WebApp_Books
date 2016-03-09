@@ -23,7 +23,9 @@
 	
 	
 	$result = $mysqli->query("INSERT into checkedout (ID_BOOK, ID_USER) VALUES ('$id', '$userid')") ;   // i am 95% certain the double quoted with '$id' will work.  otherwise 
-
+	// we also might want to change this to query the database for users, check if the user is already in here
+	//and then if they are just update their product list & append the new book
+	//and if they are aren't in the table (new user maybe, first book in cart) then we insert a new row
 
 	if(!$result)
 		echo $mysqli->connect_error;
