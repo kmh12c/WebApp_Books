@@ -1,0 +1,61 @@
+MYSQL Tables
+
+mysql> show columns from books;
++----------+-------------+------+-----+-------------------+----------------+
+| Field    | Type        | Null | Key | Default           | Extra          |
++----------+-------------+------+-----+-------------------+----------------+
+| id       | int(11)     | NO   | PRI | NULL              | auto_increment |
+| isbn     | varchar(20) | NO   |     | NULL              |                |
+| title    | varchar(50) | NO   |     | NULL              |                |
+| author   | varchar(50) | NO   |     | NULL              |                |
+| category | varchar(50) | YES  |     | NULL              |                |
+| summary  | text        | YES  |     | NULL              |                |
+| in_date  | timestamp   | NO   |     | CURRENT_TIMESTAMP |                |
+| rate     | float       | YES  |     | NULL              |                |
+| numRates | int(10)     | YES  |     | NULL              |                |
++----------+-------------+------+-----+-------------------+----------------+
+9 rows in set (0.00 sec)
+
+mysql> show columns from users;
++-----------+--------------+------+-----+-------------------+----------------+
+| Field     | Type         | Null | Key | Default           | Extra          |
++-----------+--------------+------+-----+-------------------+----------------+
+| id        | int(11)      | NO   | PRI | NULL              | auto_increment |
+| firstName | varchar(50)  | NO   |     | NULL              |                |
+| lastName  | varchar(50)  | NO   |     | NULL              |                |
+| email     | varchar(50)  | NO   | UNI | NULL              |                |
+| phrase    | varchar(200) | NO   |     | NULL              |                |
+| joinDate  | timestamp    | NO   |     | CURRENT_TIMESTAMP |                |
++-----------+--------------+------+-----+-------------------+----------------+
+6 rows in set (0.01 sec)
+
+mysql> show columns from checkedout;
++----------+-------------+------+-----+-------------------+-------+
+| Field    | Type        | Null | Key | Default           | Extra |
++----------+-------------+------+-----+-------------------+-------+
+| user     | varchar(50) | YES  |     | NULL              |       |
+| id       | int(11)     | YES  |     | NULL              |       |
+| date_out | timestamp   | NO   |     | CURRENT_TIMESTAMP |       |
++----------+-------------+------+-----+-------------------+-------+
+3 rows in set (0.00 sec)
+
+mysql> show columns from wishlist;
++----------+-------------+------+-----+-------------------+-------+
+| Field    | Type        | Null | Key | Default           | Extra |
++----------+-------------+------+-----+-------------------+-------+
+| user     | varchar(50) | YES  |     | NULL              |       |
+| id       | int(11)     | YES  |     | NULL              |       |
+| date_out | timestamp   | NO   |     | CURRENT_TIMESTAMP |       |
++----------+-------------+------+-----+-------------------+-------+
+3 rows in set (0.00 sec)
+
+mysql> show columns from reviews;
++---------+-------------+------+-----+-------------------+-------+
+| Field   | Type        | Null | Key | Default           | Extra |
++---------+-------------+------+-----+-------------------+-------+
+| user    | varchar(50) | YES  |     | NULL              |       |
+| id      | int(11)     | YES  |     | NULL              |       |
+| content | text        | YES  |     | NULL              |       |
+| time    | timestamp   | NO   |     | CURRENT_TIMESTAMP |       |
++---------+-------------+------+-----+-------------------+-------+
+4 rows in set (0.01 sec)

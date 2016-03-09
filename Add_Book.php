@@ -16,7 +16,7 @@
  	$summary = htmlentities($link->real_escape_string($summary));
 
 
- 	$query = "Insert into books (ISBN, TITLE, AUTHOR, CATEGORY, SUMMARY) values ('$isbn','$title','$author','$category','$summary')";
+ 	$query = "Insert into books (ISBN, TITLE, AUTHOR, CATEGORY, SUMMARY, RATE, NUMRATES) values ('$isbn','$title','$author','$category','$summary','0','0')";
 
  	$result = mysqli_query($link,$query);
 
