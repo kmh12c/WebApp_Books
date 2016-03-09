@@ -14,7 +14,7 @@ if(!$loggedIn){
     header('Location: index.php');
 }
 
-$link = new mysqli("localhost","sMove","k4rensMov3rPr0gr@m2o15","BookAppDB");
+$link = new mysqli("localhost","sMove","","BookAppDB");
 
 if ($link->connect_errno) {
     printf("Connect failed: %s\n", $link->connect_error);
@@ -36,7 +36,7 @@ $email = $_COOKIE["BookApp"];
 <head>
     <title>My News App</title>
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../WebApp_News/css/style.css">
+    <link rel="stylesheet" href="../WebApp_News/css/mystyle.css">
     <link href="../WebApp_News/css/dashboard.css" rel="stylesheet">
     <script>
     </script>

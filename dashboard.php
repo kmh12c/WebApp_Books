@@ -14,7 +14,7 @@ if(!$loggedIn){
     header('Location: index.php');
 }
 
-$link = new mysqli("localhost","sMove","k4rensMov3rPr0gr@m2o15","newsAppDB");
+$link = new mysqli("localhost","sMove","","BookAppDB");
 
 
 if ($link->connect_errno) {
@@ -102,7 +102,7 @@ if($action == "add_story")
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
     <link rel="stylesheet" href="../WebApp_News/css/reset.css">
-    <link rel="stylesheet" href="../WebApp_News/css/style.css">
+    <link rel="stylesheet" href="../WebApp_News/css/mystyle.css">
     <link href="../WebApp_News/css/dashboard.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="js/main.js"></script>

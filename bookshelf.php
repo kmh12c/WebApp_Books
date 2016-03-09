@@ -120,9 +120,9 @@ create table webclass.CheckedOut
 
 
             <header>
-                <h1><img src="images/Logo.png" ></h1>
-                <img src="images/bookshelf.png" width=100px id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" >
-                <img src="images/wishlist.png" width=100px id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" >
+                <h1><img src="img/Logo.png" ></h1>
+                <img src="img/bookshelf.png" width=100px id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" >
+                <img src="img/wishlist.png" width=100px id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" >
 
             </header>
 

@@ -4,6 +4,7 @@
 	//	Database connections
 	//===========================	
 	$mysqli = new mysqli('localhost', 'root', '', 'checkedout'); //host, username, password, DB
+	//$mysqli = new mysqli('localhost', 'sMove', '', 'checkedout'); //server specifications
 
 	if ($mysqli->connect_error) {
 		die('Connect Error (' . $mysqli->connect_errno . ') '

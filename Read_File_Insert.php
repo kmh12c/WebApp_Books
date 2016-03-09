@@ -12,7 +12,9 @@ while (!feof($theFile)) // Loop til end of file.
     list($a,$b,$c,$d,$e)=explode(",",$frow);   
 
 
-    $link = mysqli_connect("localhost","root","","amazoncopycat");
+    $link = mysqli_connect("localhost","root","","amazoncopycat");    
+    //$link = mysqli_connect("localhost","sMove","","amazoncopycat"); //server connections
+
 
     //$query = "INSERT INTO books (isbn, title, author, category, summary) VALUES('".$a."','".$b."', '".$c."','" . $d . "','" . $e . "')";
 

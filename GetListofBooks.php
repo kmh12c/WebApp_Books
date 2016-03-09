@@ -10,6 +10,8 @@
 
 
                   $link = mysqli_connect("localhost","root","","amazoncopycat") or die(mysql_error());
+                  //$link = mysqli_connect("localhost","sMove","","amazoncopycat") or die(mysql_error()); //server connections
+
                   $query="select * from books";
                   $results = mysqli_query($link, $query);
                   
@@ -21,7 +23,7 @@
                   while ($row = mysqli_fetch_assoc($results))
                   {  
                   print '<tbody class="scrollContent"><tr>';
-                  print '<td><img id="drag' . $row["ID"] . '" src="images/genericbook.png" draggable="true" ondragstart="drag(event)" height="30"></td>';
+                  print '<td><img id="drag' . $row["ID"] . '" src="img/genericbook.png" draggable="true" ondragstart="drag(event)" height="30"></td>';
                   print '<td>' . $row["TITLE"] . '</td>';
                   print '<td>' . $row["AUTHOR"] . '</td>';
                   print '<td>' . $row["CATEGORY"] . '</td>';

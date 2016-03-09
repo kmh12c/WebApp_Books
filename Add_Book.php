@@ -1,6 +1,8 @@
 <?php session_start();
 
  	$link = mysqli_connect("localhost","root","","amazoncopycat") or die(mysql_error());
+    //$link = mysqli_connect("localhost","sMove","","amazoncopycat") or die(mysql_error()); //server connections
+
  	$isbn = $_POST["bookISBN"];
  	$title= $_POST["submittedTitle"];
  	$author = $_POST["bookAuthor"];

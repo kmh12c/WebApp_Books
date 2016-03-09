@@ -14,7 +14,7 @@
         header('Location: main.php');
     }
 
-    $link = new mysqli("localhost","sMove","k4rensMov3rPr0gr@m2o15","BookAppDB"); //update mysql login
+    $link = new mysqli("localhost","sMove","","BookAppDB");
 
     if ($link->connect_errno) {
         printf("Connect failed: %s\n", $link->connect_error);
@@ -93,7 +93,7 @@
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
     <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/mystyle.css">
     <link href="../WebApp_News/css/frontpg.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="js/main.js"></script>
