@@ -11,13 +11,14 @@
 	}
 	//===========================
 
-	$response = "";
+	
 	
 	$id = $mysqli->real_escape_string($_POST["bookid"]); 
 	
 
 
-	$userid=2;  //this needs to point to the id number of your record in users table
+	$userid=2;  //this needs to point to the EMAIL of your record in users table so make sure we change both
+	//the value in the insert statement and the $userid stuff to the cookie we set in log-in
 
 	
 	
