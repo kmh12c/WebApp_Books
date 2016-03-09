@@ -1,5 +1,7 @@
 <?php session_start();
 
+ //This does not work, the right code for sending to the cart (aka checkedout table) is code/ajax.php
+
  	$link = mysqli_connect("localhost","root","","amazoncopycat") or die(mysql_error());
  	$isbn = $_POST["bookISBN"];
  	$title= $_POST["submittedTitle"];
