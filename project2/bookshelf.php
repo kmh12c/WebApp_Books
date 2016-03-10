@@ -76,7 +76,7 @@ create table webclass.CheckedOut
 			function showit(inName) {
 				var i;
 
-				var allModes=['BrowseMode','col3'];
+				var allModes=['BrowseMode','col3','seeCart'];
 
 				for (i=0; i<allModes.length; ++i) {
 
