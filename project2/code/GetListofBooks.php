@@ -21,7 +21,7 @@
                   while ($row = mysqli_fetch_assoc($results))
                   {  
                   echo '<tr id = "' . $row['ID'] . '" draggable="true" ondragstart="drag(event)">';
-                  echo '<td><img src="images/genericbook.png"  height="30"></td>';
+                  echo '<td><img src="images/genericbook.png" id = "' . $row['ID'] . '" draggable="true" ondragstart="drag(event)" height="30"></td>';
                   echo '<td>' . $row["TITLE"] . '</td>';
                   echo '<td>' . $row["AUTHOR"] . '</td>';
                   echo '<td>' . $row["CATEGORY"] . '</td>';
