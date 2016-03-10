@@ -66,6 +66,10 @@ create table webclass.CheckedOut
 		$(document).ready(function() {
   			  $.ajax({ url: "code/GetListofBooks.php",
              success: function(retdata) {$("#BrowseMode").html(retdata);}})})
+             
+             $(document).ready(function() {
+  			  $.ajax({ url: "code/seeCart.php",
+             success: function(retdata) {$("#seeCart").html(retdata);}})})
 
 
 
@@ -142,7 +146,7 @@ create table webclass.CheckedOut
                     <ul class="nav nav-tabs">
                         <li role="presentation" ><a href="#" onClick="showit('BrowseMode')">Browse</a></li>
                         <li role="presentation" class="active" onClick="showit('col3')"><a href="#">Add Books</a></li>
-                        <!-- <li role="presentation"><a href="#">Contact Us</a></li> -->
+                        <li role="presentation" onClick="showit('seeCart')"><a href="#">Cart</a></li>
                         <!-- <li role="presentation"><a href="#">Messages</a></li> -->
                         <li role="presentation"><a href="login.html">Logout</a></li>
                     </ul>	
@@ -172,7 +176,11 @@ create table webclass.CheckedOut
 				<div id="BrowseMode">
 					&nbsp
 				</div>
-
+				
+				<div id="seeCart">
+					&nbsp
+					
+				</div>
 
 
 
