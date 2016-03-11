@@ -1,214 +1,189 @@
-<!-- CREATE TABLE webclass.BOOKS 
-(ID INT not NULL Auto_Increment, 
-ISBN VARCHAR(20) NOT NULL , 
-TITLE VARCHAR(100) NOT NULL , 
-AUTHOR VARCHAR(100) NOT NULL , 
-CATEGORY VARCHAR(30) NOT NULL , 
-SUMMARY VARCHAR(1000) NOT NULL ,
-IN_DATE DATETIME NOT NULL, 
-PRIMARY KEY (`ID`)) ENGINE = InnoDB; 
+<?php
 
-insert into books (isbn,title,author,category,summary,in_date) values
-('13-3493021','Book One','Tom Jones','Fiction','a very boring book about the number 1',NOW());
-insert into books (isbn,title,author,category,summary,in_date) values
-('13-534439639','Book Two','Sarah Smith','Romance','A prequel to her first book',NOW());
-insert into books (isbn,title,author,category,summary,in_date) values
-('13-84205534','Book Three','Sarah Smith','Fiction','Well written story with lots of twists and turns',NOW());
+    $loggedIn=false;
+    if(isset($_COOKIE["BookApp"]))
+    {
+        $name = $_COOKIE["BookApp"];
+        $cryptedCookie = $_COOKIE["Validate"];
+        $cryptedName = crypt($name,"itsrainingtacos");
+        if($cryptedCookie == $cryptedName)
+            $loggedIn = true;
+    }
 
-drop table if exists users;
+    if(!$loggedIn){
+        header('Location: index.php');
+    }
 
-create table webclass.USERS
-(ID INT not NULL Auto_Increment,
-displayName varchar(50) not null,
-password varchar(30) not null,
-email varchar(30) not null,
-administrator boolean default false,
-PRIMARY KEY (`ID`)) ENGINE = InnoDB;
+    $link = new mysqli("localhost","sMove","","amazoncopycat");
 
-insert into users (displayName,password,email,administrator) values
-('JamieR','password','jer12b@acu.edu',true);
+    if ($link->connect_errno) {
+        printf("Connect failed: %s\n", $link->connect_error);
+        exit();
+    }
 
-insert into users (displayName,password,email,administrator) values
-('DarleneR','password','dar123@juno.com',true);
+    $email = $_COOKIE["BookApp"];
 
-insert into users (displayName,password,email,administrator) values
-('NikiR','password','nmreinhard@gmail.com',false);
-
-create table webclass.CheckedOut 
-(id_user int not null,
- id_book int not null,
- date_out date not null
-);
- -->
-
-
-
-
-
-
-<!DOCTYPE html>
+    $checkedout = "checkedout";
+    $wishlist = "wishlist";
+?>
 <html lang="en">
 	<head>
-		<title>Project #2</title>
-		<!-- Latest compiled and minified CSS -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-
-
+		<title>My Book Sharing App</title>
+		<link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    	<link href="css/style_main.css" rel="stylesheet" />
 		<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
 		<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-
-
-		<link href="css/style_main.css" rel="stylesheet" />
 		<script>
+            var checkedout = "checkedout";
+            var wishlist = "wishlist";
+			$.ajaxSetup({cache: false}); 
 
-		$.ajaxSetup({cache: false}); 
-
-		$(document).ready(function() {
-  			  $.ajax({ url: "GetListofBooks.php",
-             success: function(retdata) {$("#BrowseMode").html(retdata);}})})
-
-
+            function printBooks() {
+                  $.ajax({ 
+                    url: "php/GetListofBooks.php",
+                    success: function(retdata) {
+                        $("#BrowseMode").html(retdata);
+                    },
+                    error: function() {
+                        alert("There has been an error.");
+                    }
+                });
+            };
 
 			function showit(inName) {
 				var i;
-
 				var allModes=['BrowseMode','col3'];
 
 				for (i=0; i<allModes.length; ++i) {
-
 					if (allModes[i]==inName) {
-
 						$("#"+allModes[i]).css('display', 'block');
 					}
 					else {
-
 						$("#"+allModes[i]).css('display', 'none');
 					}
-
 				}
 
+                if(inName == 'BrowseMode') {
+                    printBooks();
+                }
+			};
+
+			function allowDrop(ev) {
+				ev.preventDefault();
 			}
 
-
-
-		function allowDrop(ev) {
-			ev.preventDefault();
-		}
-
-		function drag(ev) {
-			ev.dataTransfer.setData("text", ev.target.id);
-		}
-
-		function drop(ev) {
-			ev.preventDefault();
-		    var data = ev.dataTransfer.getData("text");
-		    ev.target.appendChild(document.getElementById(data));
-		   	 $.ajax({
-		   	 	url: "ajax.php?bid="+data,
-					success: function(result){
-	;
-
+			function drag(ev) {
+				ev.dataTransfer.setData("text", ev.target.id);
 			}
+
+			function drop(ev) {
+				ev.preventDefault();
+			    var data = ev.dataTransfer.getData("text");
+			    ev.target.appendChild(document.getElementById(data));
+			   	$.ajax({
+			   		url: "php/ajax.php",
+					type: "POST",
+					data: {bookid: data, type: ev.target.id, userid: "<?php print $email; ?>"},
+				    success: function() {},
+			    	error: function() {
+			    		alert("There has been an error.")
+			    	}
 				});
-			}
+			};	
 
+            $(document).ready(function() {
+                $(".tab").click(function () {
+                    $(".tab").removeClass("active");
+                    // $(".tab").addClass("active"); // instead of this do the below 
+                    $(this).addClass("active");   
+                });
+            });
 
+            function validateAddBook() {
+                var a = document.forms["addBook"]["submittedTitle"].value;
+                if (a == null || a == "") {
+                    alert("Title must be filled out");
+                    return false;
+                }
+
+                var b = document.forms["addBook"]["bookISBN"].value;
+                if (b == null || b == "") {
+                    alert("ISBN must be filled out");
+                    return false;
+                }
+
+                var c = document.forms["addBook"]["bookAuthor"].value;
+                if (c == null || c == "") {
+                    alert("Author must be filled out");
+                    return false;
+                }
+
+                var d = document.forms["addBook"]["bookSummary"].value;
+                if (d == null || d == "") {
+                    alert("Summary must be filled out");
+                    return false;
+                }
+
+                var e = document.forms["addBook"]["genre"].value;
+                if (e == null || e == "") {
+                    alert("Category must be filled out");
+                    return false;
+                }
+            };
+
+            function validateFile() {
+                var a = document.forms["uploadList"]["booklist"].value;
+                if (a == null || a == "") {
+                    alert("Please upload a text file.");
+                    return false;
+                }
+            };	
+
+            function getBook(ev) {
+                window.location = "book.php?book=" + ev.target.id;
+            };  
 		</script>
-
 	</head>
-	<body>
-
-
-            <header>
-                <h1><img src="img/Logo.png" ></h1>
-                <img src="img/bookshelf.png" width=100px id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" >
-                <img src="img/wishlist.png" width=100px id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" >
-
-            </header>
-
-			<div id="body-wrapper" role="main"> 
-                <nav>
-                    <!--getbootstrap.com-->
-                    <ul class="nav nav-tabs">
-                        <li role="presentation" ><a href="#" onClick="showit('BrowseMode')">Browse</a></li>
-                        <li role="presentation" class="active" onClick="showit('col3')"><a href="#">Add Books</a></li>
-                        <!-- <li role="presentation"><a href="#">Contact Us</a></li> -->
-                        <!-- <li role="presentation"><a href="#">Messages</a></li> -->
-                        <li role="presentation"><a href="login.html">Logout</a></li>
-                    </ul>	
-                </nav>
-
-        
-
-				<div id="col3" class="">
-                    
-					<form method="post" action="Add_Book.php">
-						<input type="text" class="form-control" style="width: 30%" name="submittedTitle" id="submittedTitle" placeholder="Book Title" required/> </br>
-						<input type="text" name="bookISBN" id="bookISBN" placeholder="ISBN" required/> 
-						<input type ="text" name="bookAuthor" id="bookAuthor" placeholder="Author" required/> </br> </br>
-						<textarea name="bookSummary" id="bookSummary" class="form-control" placeholder="Summary" required></textarea> </br>
-						<input type="text" name="genre" id="genre" placeholder="Book Category" required/>
-						<input type="submit">
-					</form> </br>
-					OR (must be a csv file) :
-				</br>
-					<form method="post" action="Read_File_Insert.php">
-					<input type="file" name="booklist"/> </br>
-					<input type="submit">
-				</form>
-
-				</div>
-
-				<div id="BrowseMode">
-					&nbsp
-				</div>
-
-
-
-
-			
-
-				
-				<!-- <div>
-					Search by Genre: <input type="Text" name="genrePicker"/>
-					<form method="post" action="Add_Review.php">
-					<input type="text" name="review" id="review" placeholder="Book Review" /> </br>
-					<input type="submit">
-
-
-
-				</div>
- -->
-				
-
-			
-			
-	 <?php
-					
-				 // $link = mysqli_connect("localhost","root","","amazoncopycat") or die(mysql_error());
-				 // $query="SELECT distinct(category) from books;"
-				//  $results = mysqli_query($link, $query);
-				//  while ($row = mysqli_fetch_assoc($results))
-				//  {
-				//  print '<div id="col1"><article><h2>' . $row['CATEGORY'] . '</h2>';
-				//  echo '</article></div>';
-				  
-			  //	}
-
-				  // if ($row['approved'] == true) {
-				  // 	  echo '<p>Approved By:' . $row['approver'] . '</p>';
-				  // 	}
-				  // else {
-				  // 	  echo '<p><button type="button" style="background-color:green" class="btn btn-primary" onclick="doApprove(' . $row['id'] . ');">Approve</button>
-						// 	<button type="button" style="background-color:red" class="btn btn-primary" onclick="doReject(' . $row['id'] . ');">Reject</button></p>';
-				 	//   }
-				  // echo '</article></div>';
-				  // }
-
-			?>
-			
-			
-		
-    </div>
-	</body>
+    <body>
+        <header>
+            <nav>
+                <ul class="main-nav nav nav-pills pull-right">
+                    <li role="presentation"><a class="cd-signin" href="cart.php"><img src="img/shoppingCart.png" width="50em" id="checkedout" ondrop="drop(event)" ondragover="allowDrop(event)"></a></li>
+                    <li role="presentation"><a class="cd-signin" href="wishlist.php"><img src="img/wishlist.png" width="50em" id="wishlist" ondrop="drop(event)" ondragover="allowDrop(event)"></a></li>
+                    <li role="presentation"><a class="cd-signin" href="bookshelf.php"> Bookshelf</a></li>
+                    <li role="presentation"><a class="cd-signin" href="logOut.php"> Sign Out</a></li>
+                </ul>
+            </nav>
+            <a href="index.php"><h2 class="">My Book Sharing App</h2></a>
+        </header>
+        <div id="body-wrapper" role="main"> 
+            <nav>
+                <ul class="nav nav-tabs">
+                    <li role="presentation" class="tab" ><a href="#" onClick="showit('BrowseMode')">Browse</a></li>
+                    <li role="presentation" class="tab active" onClick="showit('col3')"><a href="#">Add Books</a></li>
+                </ul>   
+            </nav>
+            <div id="col3" class="">
+                <form method="post" name="addBook" onSubmit="return validateAddBook()" action="php/Add_Book.php">
+                    <input type="text" class="form-control" style="width: 30%" name="submittedTitle" id="submittedTitle" placeholder="Book Title" required/> <br/>
+                    <input type="text" name="bookISBN" id="bookISBN" placeholder="ISBN" required/> 
+                    <input type ="text" name="bookAuthor" id="bookAuthor" placeholder="Author" required/> <br/> <br/>
+                    <textarea name="bookSummary" id="bookSummary" class="form-control" placeholder="Summary" required></textarea> <br/>
+                    <input type="text" name="genre" id="genre" placeholder="Book Category" required/>
+                    <input type="submit">
+                </form> <br/>
+                OR upload a CSV:<br/>
+                <form method="post" name="uploadList" onSubmit="return validateFile()" action="php/Read_File_Insert.php">
+                    <input type="file" accept= "text/*" name="booklist" required> <br/>
+                    <input type="submit">
+                </form>
+            </div>
+            <div id="BrowseMode">
+                &nbsp;
+            </div>
+        </div>
+        <footer class="footer">
+            <p>&copy; Jamie Reinhard and Kayla Holcomb 2016</p>
+        </footer>
+    </body>
 </html>

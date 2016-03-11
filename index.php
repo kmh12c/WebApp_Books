@@ -1,5 +1,4 @@
 <?php
-
     $loggedIn=false;
     if(isset($_COOKIE["BookApp"]))
     {
@@ -11,11 +10,10 @@
     }
 
     if($loggedIn){
-        header('Location: main.php');
+        header('Location: bookshelf.php');
     }
 
-    $link = new mysqli("localhost","sMove","","BookAppDB");
-
+    $link = new mysqli("localhost","sMove","","amazoncopycat");
     if ($link->connect_errno) {
         printf("Connect failed: %s\n", $link->connect_error);
         exit();
@@ -40,17 +38,17 @@
         $email = htmlentities($link->real_escape_string($email));
         $password = htmlentities($link->real_escape_string($password));
         $password = crypt ($password,"itsrainingtacos");
-        $result = $link->query("INSERT INTO users (firstName,lastName,email,phrase,admin) VALUES ('$fname', '$lname', '$email', '$password', 0)");
+        $result = $link->query("INSERT INTO users (firstName,lastName,email,phrase) VALUES ('$fname', '$lname', '$email', '$password')");
 
         $cookieValue = crypt($email,"itsrainingtacos");
-        setcookie("BookApp", $email, time()+180);  /* expire in 1 hour 3600*/
-        setcookie("Validate", $cookieValue, time()+180);
+        setcookie("BookApp", $email, time()+3600);  /* expire in 1 hour 3600*/
+        setcookie("Validate", $cookieValue, time()+3600);
         $loggedIn = true;
 
         if(!$result)
             die ('Can\'t add user because: ' . $link->error);
         else{
-            header('Location: main.php');
+            header('Location: bookshelf.php');
         }
     }
     elseif ($action == "login") {
@@ -59,8 +57,7 @@
         
         $email = htmlentities($link->real_escape_string($email));
         $password = htmlentities($link->real_escape_string($password));
-        
-        $password = crypt ($password,"itsrainingtacos");
+        $password = crypt($password,"itsrainingtacos");
         
         $result = $link->query("SELECT * FROM users WHERE email='$email'");
         if(!$result)
@@ -73,16 +70,15 @@
           if($row["phrase"] == $password)
           {
             $cookieValue = crypt($email,"itsrainingtacos");
-            setcookie("BookApp", $email, time()+180);  /* expire in 1 hour 3600*/
-            setcookie("Validate", $cookieValue, time()+180);  /* expire in 1 hour */
+            setcookie("BookApp", $email, time()+3600);  /* expire in 1 hour 3600*/
+            setcookie("Validate", $cookieValue, time()+3600);  /* expire in 1 hour */
             $loggedIn = true;
-            header('Location: main.php');
+            header('Location: bookshelf.php');
           }
           else
             $message = "Password for user $email incorrect!";
         }
         else {
-          // do something else
           $message = "No user $email found!";
         }
     }
@@ -94,13 +90,13 @@
     <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/mystyle.css">
-    <link href="../WebApp_News/css/frontpg.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/frontpg.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="js/main.js"></script>
     <script>
 
         $(document).bind('keypress', function(e) { 
-                if(e.keyCode == 13) {e.preventDefault();}
+                if(e.keycode == 13) {e.preventDefault();}
         });
 
         function validateSignUp() {
@@ -165,8 +161,8 @@
         <div class="main">
             <div class="container">
                 <div class="text main-nav">
-                    <h1><small>From one of the makers of the World's Best News App comes the </small>World's Best Book Sharing App!*</h1> 
-                    <h6>*(Once again) voted on by such a small percentage of the population that it doesn't even count.</h6>
+                    <h1><!-- <small>From one of the makers of the World's Best News App comes the </small> -->World's Best Book Sharing App!*</h1> 
+                    <h6><!-- *(Once again)  -->Voted on by such a small percentage of the population that it doesn't even count.</h6>
                     <p class="lead "></p>
                     <p><a class="btn btn-lg btn-success cd-signin" href="#0" role="button">Sign Up Today!</a></p>
                 </div>

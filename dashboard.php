@@ -14,7 +14,7 @@ if(!$loggedIn){
     header('Location: index.php');
 }
 
-$link = new mysqli("localhost","sMove","","BookAppDB");
+$link = new mysqli("localhost","sMove","","amazoncopycat");
 
 
 if ($link->connect_errno) {
