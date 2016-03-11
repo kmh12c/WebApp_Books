@@ -2,7 +2,7 @@
     $email = $_POST["email"];
 
     $link = mysqli_connect("localhost","sMove","","amazoncopycat") or die(mysql_error());
-    $query="SELECT b.title, b.author, b.category, b.isbn, b.id, w.id, w.user FROM books b join wishlist w on (b.id = w.id) where w.user = '$email'";
+    $query="SELECT b.title, b.author, b.category, b.isbn, b.id, w.id, w.user FROM books1 b join wishlist w on (b.id = w.id) where w.user = '$email'";
     $results = mysqli_query($link, $query);
     
     print '<table border="0" cellpadding="0" cellspacing="0" width="100%" class="scrollTable">';

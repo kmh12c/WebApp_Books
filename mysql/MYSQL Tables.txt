@@ -1,6 +1,6 @@
 MYSQL Tables
 
-mysql> show columns from books;
+mysql> show columns from books1;
 +----------+-------------+------+-----+-------------------+----------------+
 | Field    | Type        | Null | Key | Default           | Extra          |
 +----------+-------------+------+-----+-------------------+----------------+

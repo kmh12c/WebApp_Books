@@ -1,6 +1,6 @@
 -- Database: `amazoncopycat`
 
-CREATE TABLE IF NOT EXISTS `books` (
+CREATE TABLE IF NOT EXISTS `books1` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `isbn` varchar(50) NOT NULL,
   `title` varchar(50) NOT NULL,

@@ -19,7 +19,7 @@
 
             $link = mysqli_connect("localhost","sMove","","amazoncopycat");    
 
-            $query = "INSERT INTO books (isbn, title, author, category, summary) VALUES('$a','$b', '$c',' $d ','$e')";
+            $query = "INSERT INTO books1 (isbn, title, author, category, summary) VALUES('$a','$b', '$c',' $d ','$e')";
           
             $results = mysqli_query($link,$query);
           }
@@ -27,8 +27,8 @@
           $_SESSION['msg'] = $ctr . " Books uploaded";
           header('Location: bookshelf.php'); 
       }
-      catch ( Exception $e ) {
-          print '<script>console.log("' . $e .'")</script>';
-      } 
+    catch ( Exception $e ) {
+        print '<script>console.log("' . $e .'")</script>';
+    } 
   }  
 ?>

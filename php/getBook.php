@@ -3,7 +3,7 @@
     $id = $_POST["id"];
 
     $link = mysqli_connect("localhost","sMove","","amazoncopycat") or die(mysql_error());
-    $query="SELECT * FROM books b where b.id = '$id'";
+    $query="SELECT * FROM books1 b where b.id = '$id'";
     $results = mysqli_query($link, $query);
     
 

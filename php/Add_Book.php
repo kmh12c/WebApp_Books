@@ -13,7 +13,7 @@
  	$category = htmlentities($link->real_escape_string($category));
  	$summary = htmlentities($link->real_escape_string($summary));
 
- 	$query = "Insert into books (isbn, title, author, category, summary) values ('$isbn','$title','$author','$category','$summary')";
+ 	$query = "Insert into books1 (isbn, title, author, category, summary) values ('$isbn','$title','$author','$category','$summary')";
  	$result = mysqli_query($link,$query);
 
  	header('Location: bookshelf.php');

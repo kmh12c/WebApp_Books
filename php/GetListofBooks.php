@@ -1,6 +1,6 @@
 <?php 
     $link = mysqli_connect("localhost","sMove","","amazoncopycat") or die(mysql_error());
-    $query="select * from books";
+    $query="select * from books1";
     $results = mysqli_query($link, $query);
     
     print '<table border="0" cellpadding="0" cellspacing="0" width="100%" class="scrollTable">';
