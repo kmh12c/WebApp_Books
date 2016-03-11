@@ -172,7 +172,7 @@
                     <input type="text" name="genre" id="genre" placeholder="Book Category" required/>
                     <input type="submit">
                 </form> <br/>
-                OR upload a CSV:<br/>
+                OR upload a text file:<br/>
                 <form method="post" name="uploadList" onSubmit="return validateFile()" action="php/Read_File_Insert.php">
                     <input type="file" accept= "text/*" name="booklist" required> <br/>
                     <input type="submit">
