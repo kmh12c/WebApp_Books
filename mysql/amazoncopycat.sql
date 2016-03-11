@@ -7,13 +7,13 @@ CREATE TABLE IF NOT EXISTS `books` (
   `author` varchar(50) NOT NULL,
   `category` varchar(50) DEFAULT NULL,
   `summary` text,
-  `in_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `in_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (`id`)
 );
 
 CREATE TABLE IF NOT EXISTS `checkedout` (
   `user` varchar(50) NOT NULL,
   `id` int(11) NOT NULL,
-  `date_out` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `date_out` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,  PRIMARY KEY (`user`,`id`)
 );
 
 CREATE TABLE IF NOT EXISTS `reviews` (
@@ -21,36 +21,20 @@ CREATE TABLE IF NOT EXISTS `reviews` (
   `id` int(11) NOT NULL,
   `content` text,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `rating` int(1) DEFAULT NULL
+  `rating` int(1) DEFAULT NULL, PRIMARY KEY (`user`,`id`,`time`)
 );
 
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `firstName` varchar(50) NOT NULL,
   `lastName` varchar(50) NOT NULL,
-  `email` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL UNIQUE,
   `phrase` varchar(200) NOT NULL,
-  `joinDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `joinDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (`id`)
 );
 
 CREATE TABLE IF NOT EXISTS `wishlist` (
   `user` varchar(50) NOT NULL,
   `id` int(11) NOT NULL,
-  `date_out` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `date_out` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (`user`,`id`)
 );
-
-ALTER TABLE `books`
-  ADD PRIMARY KEY (`id`);
-
-ALTER TABLE `checkedout`
-  ADD PRIMARY KEY (`user`,`id`);
-
-ALTER TABLE `reviews`
-  ADD PRIMARY KEY (`user`,`id`,`time`);
-
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`);
-
-ALTER TABLE `wishlist`
-  ADD PRIMARY KEY (`user`,`id`);
